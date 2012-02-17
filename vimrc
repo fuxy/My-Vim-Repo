@@ -13,6 +13,10 @@ filetype plugin on
 filetype indent on
 syntax on
 
+"actionscript
+autocmd BufRead *.as set filetype=actionscript
+autocmd FileType as setlocal omnifunc=actionscriptcomplete#CompleteTags
+
 "Write the old file out when switching between files.
 set autowrite
 
@@ -29,17 +33,17 @@ set timeoutlen=500
 "Switch between buffers without saving
 set hidden
 
-"Set the color scheme. Change this to your preference. 
+"Set the color scheme. Change this to your preference.
 "Here's 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
 colorscheme twilight
 
 "Set font type and size. Depends on the resolution. Larger screens, prefer h15
-set guifont=Monaco:h18
+set guifont=Monaco:h14
 
 "Tab stuff
-set tabstop=3
-set shiftwidth=3
-set softtabstop=3
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab
 
 "Show command in bottom right portion of the screen
@@ -53,7 +57,7 @@ set number
 
 "Indent stuff
 set smartindent
-set autoindent
+"set autoindent
 
 "Always show the status line
 set laststatus=2
@@ -61,16 +65,27 @@ set laststatus=2
 "Prefer a slightly higher line height
 set linespace=3
 
-"Better line wrapping 
-set wrap
-set textwidth=79
-set formatoptions=qrn1
+"Better line wrapping
+"set wrap
+"set textwidth=79
+"set formatoptions=qrn1
 
 "Set incremental searching"
 set incsearch
 
 "Highlight searching
 set hlsearch
+
+"clearing highlighted search
+nmap <silent> <leader>/ :nohlsearch<CR>
+
+" highlight current line
+set cursorline
+
+" backspace for dummys
+set backspace=indent,eol,start
+
+set linespace=0					" No extra spaces between rows
 
 " case insensitive search
 set ignorecase
@@ -91,9 +106,6 @@ set mousehide
 "Shortcut to fold tags with leader (usually \) + ft
 nnoremap <leader>ft Vatzf
 
-" Create dictionary for custom expansions
-set dictionary+=/Users/Home/.vim/dict.txt
-
 "Opens a vertical split and switches over (\v)
 nnoremap <leader>v <C-w>v<C-w>l
 
@@ -103,14 +115,10 @@ set splitbelow
 "Session settings
 set sessionoptions=resize,winpos,winsize,buffers,tabpages,folds,curdir,help
 
+set encoding=utf-8
+
 "Set up an HTML5 template for all new .html files
 "autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
-
-"Load the current buffer in Firefox - Mac specific.
-abbrev ff :! open -a firefox.app %:p<cr>
-
-"Map a change directory to the desktop - Mac specific
-nmap ,d :cd ~/Desktop<cr>:e.<cr>
 
 "Shortcut for editing  vimrc file in a new tab
 nmap ,ev :tabedit $MYVIMRC<cr>
@@ -159,10 +167,24 @@ nmap <C-Down> ddp
 vmap <C-Up> xkP`[V`]
 vmap <C-Down> xp`[V`]
 
+"Move between tabs
+nmap <C-S-Left> <C-S-Up>
+nmap <C-S-Right> <C-S-Down>
+
+" Switch to alternate file
+map <C-Tab> :bnext<cr>
+map <C-S-Tab> :bprevious<cr>
+
+" Write file
+map ,w :w<cr>
+
+" Close file
+map ,q :q<cr>
+
 " Source the vimrc file after saving it. This way, you don't have to reload
 " Vim to see the changes.
 if has("autocmd")
-  autocmd bufwritepost .vimrc source $MYVIMRC
+ autocmd bufwritepost .vimrc source $MYVIMRC
 endif
 "
 " easier window navigation
@@ -180,35 +202,44 @@ nmap ,nt :NERDTreeToggle
 "Show hidden files in NerdTree
 let NERDTreeShowHidden=1
 
-"autopen NERDTree and focus cursor in new document
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
+"autocmd VimEnter * wincmd p
 
 "Helpeful abbreviations
 iab lorem Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-iab llorem Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+iab llorem Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 "Spelling corrects. Just for example. Add yours below.
 iab teh the
 iab Teh The
 
 "--------------------------"
-" PERSONAL SETTINGS 
+" PERSONAL SETTINGS
 " -------------------------"
 "Example for adding abbreviations - triggered by the spacebar.
-iabbrev mysite ftp://jeff-way.com@jeffrey-way.com/domains/
+"iabbrev mysite ftp://jeff-way.com@jeffrey-way.com/domains/
 
 "Shortcut for logging into my server
-nmap ,server :Nread ftp://jeff-way.com@jeffrey-way.com/domains/<cr>
-
-"Shortcut directly to my theme files on server
-nmap ,theme :Nread ftp://jeff-way.com@jeffrey-way.com/domains/jeffrey-way.com/html/wp-content/themes/magazineJW/<cr>
+nmap ,f :e ftp://username@fuxy.net:21/<cr>
 
 "For autocompletion of Snipmate plugin
 "let g:acp_behaviorSnipmateLength = 1
 
 "Peep open
 if has("gui_macvim")
-  macmenu &File.New\ Tab key=<nop>
-  map <c-o> <Plug>PeepOpen
+ macmenu &File.New\ Tab key=<nop>
+ map <c-o> <Plug>PeepOpen
 end
+
+" OS Independent
+
+"Load the current buffer in Firefox - Mac specific.
+abbrev ff :! open -a firefox.app %:p<cr>
+
+"Map a change directory to the desktop - Mac specific
+nmap ,d :cd ~/Desktop<cr>:e.<cr>
+
+autocmd VimEnter * NERDTree /Users/milenmukanov/Work/Web/WebServer/
+
+" Create dictionary for custom expansions
+set dictionary+=/Users/milenmukanov/.vim/dict.txt
+
