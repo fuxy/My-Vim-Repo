@@ -228,6 +228,7 @@ if has("gui_macvim")
 end
 
 " OS Independent
+
 if has("unix")
   "Set font type and size. Depends on the resolution. Larger screens, prefer h15
   set guifont=Monaco:h14
