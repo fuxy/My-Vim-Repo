@@ -37,9 +37,6 @@ set hidden
 "Here's 100 to choose from: http://www.vim.org/scripts/script.php?script_id=625
 colorscheme twilight
 
-"Set font type and size. Depends on the resolution. Larger screens, prefer h15
-set guifont=Monaco:h14
-
 "Tab stuff
 set tabstop=2
 set shiftwidth=2
@@ -219,7 +216,7 @@ iab Teh The
 "iabbrev mysite ftp://jeff-way.com@jeffrey-way.com/domains/
 
 "Shortcut for logging into my server
-nmap ,f :e ftp://username@fuxy.net:21/<cr>
+nmap ,f :e ftp://fuxy.net:21/<cr>
 
 "For autocompletion of Snipmate plugin
 "let g:acp_behaviorSnipmateLength = 1
@@ -231,15 +228,21 @@ if has("gui_macvim")
 end
 
 " OS Independent
-
-"Load the current buffer in Firefox - Mac specific.
-abbrev ff :! open -a firefox.app %:p<cr>
-
-"Map a change directory to the desktop - Mac specific
-nmap ,d :cd ~/Desktop<cr>:e.<cr>
-
-autocmd VimEnter * NERDTree /Users/milenmukanov/Work/Web/WebServer/
-
-" Create dictionary for custom expansions
-set dictionary+=/Users/milenmukanov/.vim/dict.txt
-
+if has("unix")
+  "Set font type and size. Depends on the resolution. Larger screens, prefer h15
+  set guifont=Monaco:h14
+  "Load the current buffer in Firefox - Mac specific.
+  abbrev ff :! open -a firefox.app %:p<cr>
+  "Map a change directory to the desktop - Mac specific
+  nmap ,d :cd ~/Desktop<cr>:e.<cr>
+  autocmd VimEnter * NERDTree /Users/milenmukanov/Work/Web/WebServer/
+  " Create dictionary for custom expansions
+  set dictionary+=/Users/milenmukanov/.vim/dict.txt
+else
+  "Set font type and size. Depends on the resolution. Larger screens, prefer h15
+  set guifont=Consolas:h12
+  " Create dictionary for custom expansions
+  set dictionary+=~/vimfiles/dict.txt
+  "autopen NERDTree and focus cursor in new document
+  autocmd VimEnter * NERDTree D:\_svn\
+endif
