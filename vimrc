@@ -1,9 +1,3 @@
-" .vimrc File
-" Maintained by: Jeffrey Way
-" jeffrey@jeffrey-way.com
-" http://net.tutsplus.com
-"
-
 "Forget compatibility with Vi. Who cares.
 set nocompatible
 
@@ -54,7 +48,7 @@ set number
 
 "Indent stuff
 set smartindent
-"set autoindent
+set autoindent
 
 "Always show the status line
 set laststatus=2
@@ -135,20 +129,6 @@ nmap <space> :
 "Map code completion to , + tab
 imap ,<tab> <C-x><C-o>
 
-" More useful command-line completion
-" set wildmenu
-
-"Auto-completion menu
-" set wildmode=list:longest
-
-"http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
-" set completeopt=longest,menuone
-" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-"   \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-" inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-"   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
 "Map escape key to jj -- much faster
 imap jj <esc>
 
@@ -190,14 +170,6 @@ nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 
-"------------------------"
-"NERDTREE PLUGIN SETTINGS
-"------------------------"
-"Shortcut for NERDTreeToggle
-nmap ,nt :NERDTreeToggle
-
-"Show hidden files in NerdTree
-let NERDTreeShowHidden=1
 
 "autocmd VimEnter * wincmd p
 
@@ -209,23 +181,34 @@ iab llorem Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eius
 iab teh the
 iab Teh The
 
-"--------------------------"
-" PERSONAL SETTINGS
-" -------------------------"
-"Example for adding abbreviations - triggered by the spacebar.
-"iabbrev mysite ftp://jeff-way.com@jeffrey-way.com/domains/
-
 "Shortcut for logging into my server
 nmap ,f :e ftp://fuxy.net:21/<cr>
-
-"For autocompletion of Snipmate plugin
-"let g:acp_behaviorSnipmateLength = 1
 
 "Peep open
 if has("gui_macvim")
  macmenu &File.New\ Tab key=<nop>
  map <c-o> <Plug>PeepOpen
 end
+
+" Remove trailing whitespaces and ^M chars
+autocmd FileType js,php,js,html,as,xml,css autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+
+" Making it so ; works like : for commands. Saves typing and eliminates :W style typos due to lazy holding shift.
+nnoremap ; :
+
+" NerdTree {
+    map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+    map <leader>e :NERDTreeFind<CR>
+    nmap <leader>nt :NERDTreeFind<CR>
+
+    let NERDTreeShowBookmarks=1
+    let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+    let NERDTreeChDirMode=0
+    let NERDTreeQuitOnOpen=1
+    let NERDTreeShowHidden=1
+    let NERDTreeKeepTreeInNewTab=1
+" }
+
 
 " OS Independent
 
