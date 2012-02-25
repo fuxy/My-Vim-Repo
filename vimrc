@@ -191,7 +191,7 @@ if has("gui_macvim")
 end
 
 " Remove trailing whitespaces and ^M chars
-autocmd FileType js,php,js,html,as,xml,css autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+" autocmd FileType js,php,js,html,as,xml,css autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
 
 " Making it so ; works like : for commands. Saves typing and eliminates :W style typos due to lazy holding shift.
 nnoremap ; :
